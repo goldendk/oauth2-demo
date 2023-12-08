@@ -5,3 +5,18 @@ server:
 logging:
   level:
     org.springframework.security: trace
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          local:
+            client-id: client-1-id
+            client-secret: client-1-secret
+            provider: local
+            scope:
+              - openid
+        provider:
+          local:
+            issuer-uri: http://localhost:9000

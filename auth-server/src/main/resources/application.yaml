@@ -13,19 +13,20 @@ spring:
         client:
           oidc-client:
             registration:
-              client-id: "oidc-client"
-              client-secret: "{noop}secret"
+              client-id: "client-1-id"
+              client-secret: "{noop}client-1-secret"
               client-authentication-methods:
                 - "client_secret_basic"
               authorization-grant-types:
                 - "authorization_code"
                 - "refresh_token"
+                - "client_credentials"
               redirect-uris:
-                - "http://127.0.0.1:8080/login/oauth2/code/oidc-client"
-              post-logout-redirect-uris:
-                - "http://127.0.0.1:8080/"
+                - "http://127.0.0.1:8080/login/oauth2/code/local"
+#              post-logout-redirect-uris:
+#                - "http://localhost:8080/"
               scopes:
                 - "openid"
                 - "profile"
-            require-authorization-consent: true
+#            require-authorization-consent: false
 

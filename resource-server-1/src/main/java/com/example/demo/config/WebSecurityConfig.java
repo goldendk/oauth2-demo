@@ -2,11 +2,14 @@ package com.example.demo.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -20,12 +23,14 @@ public class WebSecurityConfig {
 				.authorizeHttpRequests((requests) -> requests
 						.requestMatchers("/", "/home").permitAll()
 						.anyRequest().authenticated()
-				)
-				.formLogin((form) -> form
-						.loginPage("/login")
-						.permitAll()
-				)
-				.logout((logout) -> logout.permitAll());
+				);
+
+		http.oauth2ResourceServer(server->server.jwt(Customizer.withDefaults()));
+//				.formLogin((form) -> form
+//						.loginPage("/login")
+//						.permitAll()
+////				)
+//				.logout((logout) -> logout.permitAll());
 
 		return http.build();
 	}
@@ -41,4 +46,10 @@ public class WebSecurityConfig {
 
 		return new InMemoryUserDetailsManager(user);
 	}
+
+
+//	@Bean
+//	JwtDecoder jwtDecoder() {
+//		return NimbusJwtDecoder.withJwkSetUri("http://localhost:9000").build();
+//	}
 }
